@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HabitFlow.Pages.RemindersPage"
+             Title="Reminders">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label Text="Daily reminder"
+                   FontSize="24"
+                   FontAttributes="Bold"/>
+
+            <Frame Padding="14" CornerRadius="16">
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <Label Text="Enable reminder"
+                               FontSize="16"
+                               VerticalOptions="Center"/>
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding ReminderEnabled}" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <Label Text="Time"
+                               FontSize="16"
+                               VerticalOptions="Center"/>
+                        <TimePicker Grid.Column="1"
+                                    Time="{Binding ReminderTime}" />
+                    </Grid>
+
+                    <Label Text="Message preview"
+                           Opacity="0.7"/>
+
+                    <Frame Padding="12" CornerRadius="14" HasShadow="False" Opacity="0.9">
+                        <Label Text="{Binding ReminderPreviewText}"
+                               FontSize="14"/>
+                    </Frame>
+
+                    <Button Text="Save &amp; Schedule"
+                            Command="{Binding SaveReminderCommand}" />
+
+                    <Button Text="Cancel reminder"
+                            Command="{Binding CancelReminderCommand}"
+                            Opacity="0.8"/>
+
+                    <!-- ✅ Saved message (shows then hides) -->
+                    <Label Text="{Binding ReminderStatusText}"
+                           IsVisible="{Binding IsReminderStatusVisible}"
+                           TextColor="Green"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0,6,0,0"/>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="14" CornerRadius="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Pro tip"
+                           FontAttributes="Bold"/>
+                    <Label Text="If your device blocks notifications, enable them in system settings."
+                           Opacity="0.7"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

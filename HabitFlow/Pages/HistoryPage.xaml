@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HabitFlow.Pages.HistoryPage"
+             x:Name="HistoryPageRef"
+             Title="History">
+
+    <Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="12">
+
+        <!-- Month header -->
+        <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+            <Button Text="◀"
+                    Command="{Binding PrevMonthCommand}"
+                    WidthRequest="44" />
+
+            <Label Grid.Column="1"
+                   Text="{Binding MonthTitle}"
+                   HorizontalOptions="Center"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Button Grid.Column="2"
+                    Text="▶"
+                    Command="{Binding NextMonthCommand}"
+                    WidthRequest="44" />
+        </Grid>
+
+        <!-- Weekday header -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="6">
+            <Label Text="Mon" HorizontalOptions="Center" Opacity="0.7"/>
+            <Label Text="Tue" Grid.Column="1" HorizontalOptions="Center" Opacity="0.7"/>
+            <Label Text="Wed" Grid.Column="2" HorizontalOptions="Center" Opacity="0.7"/>
+            <Label Text="Thu" Grid.Column="3" HorizontalOptions="Center" Opacity="0.7"/>
+            <Label Text="Fri" Grid.Column="4" HorizontalOptions="Center" Opacity="0.7"/>
+            <Label Text="Sat" Grid.Column="5" HorizontalOptions="Center" Opacity="0.7"/>
+            <Label Text="Sun" Grid.Column="6" HorizontalOptions="Center" Opacity="0.7"/>
+        </Grid>
+
+        <!-- Calendar grid -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding CalendarDays}"
+                        SelectionMode="None">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="7"
+                                 Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="12"
+       Padding="10"
+       Margin="4"
+       HasShadow="False"
+       Opacity="{Binding IsInMonth, Converter={StaticResource BoolToOpacityConverter}}">
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+            Command="{Binding BindingContext.OpenDayDetailsCommand, Source={x:Reference Name=HistoryPageRef}}"
+            CommandParameter="{Binding DateKey}" />
+                        </Frame.GestureRecognizers>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="{Binding DayNumber}"
+               FontAttributes="Bold" />
+
+                            <Label Text="{Binding CountText}"
+               FontSize="12"
+               Opacity="0.8"/>
+
+                            <ProgressBar Progress="{Binding ProgressValue}" />
+                        </VerticalStackLayout>
+
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
